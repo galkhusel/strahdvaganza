@@ -1,22 +1,23 @@
 from flask import Flask
 from views import views
-from datetime import datetime
-from db import create_db
-#from models import User
-
+from DB import db
+from endpoints.User import users_bp
 app = Flask(__name__)
 
 # secret key
 app.config['SECRET_KEY'] = 'DESPUESVEOQUEENCAJOACA'
 
-#add db
+# add db
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ghouls_archives.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-create_db(app)
+# Initialize the database
+db.init_app(app)
 
 app.register_blueprint(views, url_prefix="/views")
+app.register_blueprint(users_bp, url_prefix="/ghouls_archives/entourage")  # Update the url_prefix
 
 if __name__ == '__main__':
-	app.run(debug=True, port=8000)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, port=8000)
