@@ -10,16 +10,16 @@ class User(db.Model):
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(64), nullable=False)
-    date_added = db.Column(db.DateTime)
     characterID = db.Column(db.Integer, db.ForeignKey('Character.ID'))
     PaymentID = db.Column(db.Integer, db.ForeignKey('Payment.ID'))
 
     def set_password(self, password):
         self.password = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-    def check_password(self, password):
-        hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-        return self.password == hashed_password
+
+    def check_password(self, password_):
+        return self.password == hashlib.sha256(password_.encode('utf-8')).hexdigest()
+
 
 class Character(db.Model):
     __tablename__ = 'Character'
