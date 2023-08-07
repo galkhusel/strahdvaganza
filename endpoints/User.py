@@ -77,7 +77,7 @@ def login():
 # Logout endpoint
 #@users_bp.route('/logout', methods=['POST'], endpoint='/logout')
 @users_bp.route('/logout', methods=['POST'], endpoint='logout')
-@login_required
+#@login_required
 def logout():
     #login_manager.logout_user()
     logout_user()
