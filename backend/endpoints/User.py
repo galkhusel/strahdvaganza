@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, session
 from db import User, db 
-from flask_login import LoginManager, login_required, logout_user
+from flask_login import LoginManager, logout_user
 
 
 login_manager = LoginManager()
