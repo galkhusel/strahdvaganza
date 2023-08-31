@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
-from db import Character, db 
+from db import Character, Character_Classes,Item , db 
 import os
 
 # relative path
-PDF_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'instance', 'PDF'))
+PDF_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'instance', 'PDF'))
 
 
 # Create a blueprint for characters-related endpoints
@@ -15,15 +15,53 @@ def get_character(character_id):
     character_ = {'id': character.ID, 'name': character.Name, 'class': character.ClassID,'item': character.ItemID,'pdf': character.PDF} 
     return jsonify(character_)
 
+def update_character_class(character, class_id):
+    character_class_new = Character_Classes.query.get(class_id)
+    character_class_old = Character_Classes.query.get(character.ClassID)
+    if character_class_new and character_class_new.Slot == 1:
+        character.ClassID = character_class_new.ID
+        character_class_new.Slot = 0
+        character_class_old.slot = 1
+        db.session.commit()
+        return 1
+    return 0
+
+def update_character_item(character, item_id):
+    item = Item.query.get(item_id)
+    if Item:
+        character.ItemId = item.ID
+        db.session.commit()
+        return 1
+    return 0
 
 @characters_bp.route('/hero/<int:character_id>', methods=['PUT'])
 def update_character(character_id):
     character = Character.query.get(character_id)
-    # Update character data here (e.g., name, class, item)
-    db.session.commit()
-    updated_data = {'id': character.ID, 'name': character.Name, 'class': character.ClassID, 'item': character.ItemID}
-    return jsonify(updated_data)
+    data = request.get_json()
 
+    if character:
+        # Check if we must change the class id
+        if 'ClassID' in data:
+            result = update_character_class(character, data['ClassID'])
+            if result == 0:
+                return jsonify({"error": "Class could not be assigned"}), 400
+        
+        # Check if we must change the item id
+        if 'ItemID' in data:
+            result = update_character_item(character, data['ItemID'])
+            if result == 0:
+                return jsonify({"error": "Item could not be assigned"}), 400
+
+        # Update character data based on the incoming JSON data
+        character.Name = data['Name']
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        # Prepare the updated data response
+        return jsonify({'message': 'character updated'}), 200
+    else:
+        return jsonify({'error': 'Character not found'}), 404
 
 
 @characters_bp.route('/hero/<int:character_id>/sign_blood_covenant', methods=['POST'])
