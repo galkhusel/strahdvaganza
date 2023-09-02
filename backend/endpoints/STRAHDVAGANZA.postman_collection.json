@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "77e041be-b7c7-43b0-b677-80460558e0a8",
+		"name": "STRAHDVAGANZA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28680640"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "LOGIN",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"newemail@example.com\",\r\n    \"password\": \"newpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://127.0.0.1:8000//ghouls_archives/entourage/login"
+							},
+							"response": []
+						},
+						{
+							"name": "LOGOUT",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": "http://127.0.0.1:8000//ghouls_archives/entourage/logout"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "USER",
+					"item": [
+						{
+							"name": "GET SPECIFIC USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000//ghouls_archives/entourage/summoned_phantasm/1"
+							},
+							"response": []
+						},
+						{
+							"name": "update user",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"New Name\", \"email\": \"newemail@example.com\", \"password\": \"newpassword\"}"
+								},
+								"url": "http://127.0.0.1:8000//ghouls_archives/entourage/update_user/1"
+							},
+							"response": []
+						},
+						{
+							"name": "GET USERS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000//ghouls_archives/entourage/summoned"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "New Folder",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Characters",
+			"item": [
+				{
+					"name": "GET CHARACTER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000//ghouls_archives/spectral_manifestation/hero/1"
+					},
+					"response": []
+				},
+				{
+					"name": "UPLOAD PDF",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pdf",
+									"contentType": "",
+									"description": "manifesto",
+									"type": "file",
+									"src": "Manifesto Strahdista.pdf"
+								}
+							]
+						},
+						"url": "http://127.0.0.1:8000//ghouls_archives/spectral_manifestation/hero/1/sign_blood_covenant"
+					},
+					"response": []
+				},
+				{
+					"name": "change data (name, class, items)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"New Name\",\r\n  \"main_class\": \"Warrior\",\r\n  \"items_selected\": [\"Item 1\", \"Item 2\"],\r\n  \"class_id\": 2\r\n}"
+						},
+						"url": "http://127.0.0.1:8000//ghouls_archives/spectral_manifestation/hero/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PAYMENTS",
+			"item": [
+				{
+					"name": "UPLOAD JPG",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "jpg",
+									"description": "SWMG(WLCS)",
+									"type": "file",
+									"src": "SHADOW_WIZARD_MONEY_GANG(WE LOVE CASTING SPELLS).jpg"
+								}
+							]
+						},
+						"url": "http://127.0.0.1:8000//ghouls_archives/eldritch_tribute_accountability/1/eldritch_receipt"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
