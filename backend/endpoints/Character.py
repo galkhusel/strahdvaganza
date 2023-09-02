@@ -21,7 +21,7 @@ def update_character_class(character, class_id):
     if character_class_new and character_class_new.Slot == 1:
         character.ClassID = character_class_new.ID
         character_class_new.Slot = 0
-        character_class_old.slot = 1
+        character_class_old.Slot = 1
         db.session.commit()
         return 1
     return 0
