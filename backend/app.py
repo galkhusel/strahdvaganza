@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from views import views
 from db import db
 from endpoints.User import users_bp, login_manager
@@ -26,6 +27,7 @@ app.register_blueprint(users_bp, url_prefix="/ghouls_archives/entourage")  # Upd
 app.register_blueprint(characters_bp, url_prefix="/ghouls_archives/spectral_manifestation")
 app.register_blueprint(payment_bp, url_prefix="/ghouls_archives/eldritch_tribute_accountability")
 
+CORS(app, resources={r"/*": {"origins": "*"}})
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
