@@ -1,13 +1,12 @@
-import { useState } from 'react'
 import './App.css'
+import { Login } from './pages/login/Login'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <h1 className="text-3xl font-bold">
-      Hello world!
-    </h1>
+    <div className='flex items-center justify-center'>
+      <Login/>
+    </div>
   )
 }
 

@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        script:['Dancing Script']
+      },
       colors: {
         "dark-purple": "#4a004b",
         "blood-red": "#8b0000",
