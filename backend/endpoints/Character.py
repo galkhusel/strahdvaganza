@@ -3,7 +3,7 @@ from db import Character, Character_Classes,Item , db
 import os
 
 # relative path
-PDF_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'instance', 'PDF'))
+PDF_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'instance', 'PDF'))
 
 
 # Create a blueprint for characters-related endpoints
@@ -67,6 +67,8 @@ def update_character(character_id):
 @characters_bp.route('/hero/<int:character_id>/sign_blood_covenant', methods=['POST'])
 def upload_pdf(character_id):
     character = Character.query.get(character_id)
+
+
 
     if 'pdf' not in request.files:
         return jsonify({"error": "No PDF file provided"}), 400
