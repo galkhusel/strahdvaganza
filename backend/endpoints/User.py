@@ -21,7 +21,7 @@ def get_users():
 def get_specific_user(user_id):
     user = User.query.get(user_id)
     user = {'id': user.ID, 'name': user.name, 'email': user.email}
-    return jsonify(user_list)
+    return jsonify(user)
 
 
 @users_bp.route('/morphing_summoned/<int:user_id>', methods=['PUT'])
