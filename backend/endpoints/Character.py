@@ -93,3 +93,9 @@ def upload_pdf(character_id):
     db.session.commit()
     
     return jsonify({"message": "PDF uploaded successfully"})
+
+@characters_bp.route('/items', methods=['GET'])
+def get_magic_items():
+    items = Item.query.all()
+    items_list = [{'id': item.ID, 'name': item.name, 'description': item.Description} for item in items]
+    return jsonify(items_list)
