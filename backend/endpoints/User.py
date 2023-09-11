@@ -69,7 +69,7 @@ def login():
         load_user(user.ID)
         session['user_id'] = user.ID
         session.modified = True
-        return jsonify({'message': 'Login successful'}), 200
+        return jsonify({'id': f'{user.ID}', 'name': f'{user.name}', 'characterID': f'{user.characterID}', 'PaymentID': f'{user.PaymentID}'}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
 
