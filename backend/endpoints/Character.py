@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from db import Character, Character_Classes, Item, User, db 
+from db import Character, Character_Classes,Item , db
 import os
 
 # relative path
@@ -16,12 +16,15 @@ def get_character(character_id):
     return jsonify(character_)
 
 def update_character_class(character, class_id):
+    if class_id == character.ClassID: return 1
     character_class_new = Character_Classes.query.get(class_id)
     character_class_old = Character_Classes.query.get(character.ClassID)
-    if character_class_new and character_class_new.Slot == 1:
+    print(character_class_new.Slot)
+    print(character_class_old.Slot)
+    if character_class_new.Slot == 0 and character_class_old.Slot == 1:
         character.ClassID = character_class_new.ID
-        character_class_new.Slot = 0
-        character_class_old.Slot = 1
+        character_class_new.Slot = 1
+        character_class_old.Slot = 0
         db.session.commit()
         return 1
     return 0
@@ -68,8 +71,6 @@ def update_character(character_id):
 def upload_pdf(character_id):
     character = Character.query.get(character_id)
 
-
-
     if 'pdf' not in request.files:
         return jsonify({"error": "No PDF file provided"}), 400
     
@@ -93,28 +94,3 @@ def upload_pdf(character_id):
     db.session.commit()
     
     return jsonify({"message": "PDF uploaded successfully"})
-
-@characters_bp.route('/items', methods=['GET'])
-def get_magic_items():
-    try:
-        items = Item.query.all()
-        items_list = [{'id': item.ID, 'name': item.Name, 'description': item.Description} for item in items]
-        return jsonify(items_list)
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 550
-@characters_bp.route('/classes/available', methods=['GET'])
-def get_available_classes():
-    try:
-        unused_character_classes = db.session.query(Character_Classes) \
-            .outerjoin(Character, Character_Classes.ID == Character.ClassID) \
-            .filter(Character.ID.is_(None)) \
-            .all()
-
-        result = [{'name': unused_class.Class, 'id': unused_class.ID} for unused_class in unused_character_classes]
-
-        return jsonify(result)
-
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 550
