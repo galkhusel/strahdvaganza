@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from db import Character, Character_Classes,Item , db 
+from db import Character, Character_Classes, Item, User, db 
 import os
 
 # relative path
@@ -96,6 +96,25 @@ def upload_pdf(character_id):
 
 @characters_bp.route('/items', methods=['GET'])
 def get_magic_items():
-    items = Item.query.all()
-    items_list = [{'id': item.ID, 'name': item.name, 'description': item.Description} for item in items]
-    return jsonify(items_list)
+    try:
+        items = Item.query.all()
+        items_list = [{'id': item.ID, 'name': item.Name, 'description': item.Description} for item in items]
+        return jsonify(items_list)
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 550
+@characters_bp.route('/classes/available', methods=['GET'])
+def get_available_classes():
+    try:
+        unused_character_classes = db.session.query(Character_Classes) \
+            .outerjoin(Character, Character_Classes.ID == Character.ClassID) \
+            .filter(Character.ID.is_(None)) \
+            .all()
+
+        result = [{'name': unused_class.Class, 'id': unused_class.ID} for unused_class in unused_character_classes]
+
+        return jsonify(result)
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 550
