@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db import Character, Character_Classes,Item , db
+from werkzeug.utils import secure_filename
 import os
 
 # relative path
@@ -38,59 +39,71 @@ def update_character_item(character, item_id):
     return 0
 
 @characters_bp.route('/hero/<int:character_id>', methods=['PUT'])
-def update_character(character_id):
+def update_character_and_upload_pdf(character_id):
     character = Character.query.get(character_id)
-    data = request.get_json()
 
-    if character:
-        # Check if we must change the class id
-        if 'ClassID' in data:
-            result = update_character_class(character, data['ClassID'])
-            if result == 0:
-                return jsonify({"error": "Class could not be assigned"}), 400
-        
-        # Check if we must change the item id
-        if 'ItemID' in data:
-            result = update_character_item(character, data['ItemID'])
-            if result == 0:
-                return jsonify({"error": "Item could not be assigned"}), 400
-
-        # Update character data based on the incoming JSON data
-        character.Name = data['Name']
-
-        # Commit the changes to the database
-        db.session.commit()
-
-        # Prepare the updated data response
-        return jsonify({'message': 'character updated'}), 200
-    else:
+    if not character:
         return jsonify({'error': 'Character not found'}), 404
 
+    data = request.form.to_dict()
+    # Check if we must change the class id
+    if 'ClassID' in data:
+        result = update_character_class(character, data['ClassID'])
+        if result == 0:
+            return jsonify({"error": "Class could not be assigned"}), 400
+    
+    # Check if we must change the item id
+    if 'ItemID' in data:
+        result = update_character_item(character, data['ItemID'])
+        if result == 0:
+            return jsonify({"error": "Item could not be assigned"}), 400
 
-@characters_bp.route('/hero/<int:character_id>/sign_blood_covenant', methods=['POST'])
-def upload_pdf(character_id):
-    character = Character.query.get(character_id)
+    # Update character data based on the incoming JSON data
+    character.Name = data['Name']
 
-    if 'pdf' not in request.files:
-        return jsonify({"error": "No PDF file provided"}), 400
-    
-    pdf_file = request.files['pdf']
-    
-    if pdf_file.filename == '':
-        return jsonify({"error": "No selected PDF file"}), 400
-    
-    # Construct the PDF file path using the PDF_FILE_PATH
-    pdf_filename = f'character_{character_id}.pdf'
-    pdf_path = os.path.join(PDF_FILE_PATH, pdf_filename)
-    print(pdf_file)
-    # Ensure the PDF folder exists, create if not
-    os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
-    # Before saving the file
-    print("pdf_path:", pdf_path)
-    pdf_file.save(pdf_path)
-    # After saving the file
-    print("PDF saved at:", pdf_path)
-    character.PDF = pdf_path
+    # Handle PDF upload
+    if 'pdf' in request.files:
+        pdf_file = request.files['pdf']
+        if pdf_file.filename != '':
+            # Secure the filename to prevent path traversal attacks
+            pdf_filename = secure_filename(pdf_file.filename)
+            pdf_path = os.path.join(PDF_FILE_PATH, pdf_filename)
+            print(pdf_file)
+            # Ensure the PDF folder exists, create if not
+            os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
+            # Before saving the file
+            print("pdf_path:", pdf_path)
+            pdf_file.save(pdf_path)
+            # After saving the file
+            print("PDF saved at:", pdf_path)
+            character.PDF = pdf_path
     db.session.commit()
+
+    return jsonify({'message': 'character updated'}), 200
+
+
+@characters_bp.route('/items', methods=['GET'])
+def get_magic_items():
+    try:
+        items = Item.query.all()
+        items_list = [{'id': item.ID, 'name': item.Name, 'description': item.Description} for item in items]
+        return jsonify(items_list)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 550
     
-    return jsonify({"message": "PDF uploaded successfully"})
+@characters_bp.route('/classes/available', methods=['GET'])
+def get_available_classes():
+    try:
+        unused_character_classes = db.session.query(Character_Classes) \
+            .outerjoin(Character, Character_Classes.ID == Character.ClassID) \
+            .filter(Character.ID.is_(None)) \
+            .all()
+
+        result = [{'name': unused_class.Class, 'id': unused_class.ID} for unused_class in unused_character_classes]
+
+        return jsonify(result)
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 550
