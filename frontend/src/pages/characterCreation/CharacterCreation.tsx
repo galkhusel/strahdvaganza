@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchItems } from '../../api/fetchItems';
 import { fetchAvailableClasses } from '../../api/fetchAvailableClasses';
+import { updateUserCharacter } from '../../api/updateUserCharacter';
 
 export const CharacterCreation = () => {
   const [classes, setClasses] = useState([]);
@@ -10,23 +11,22 @@ export const CharacterCreation = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState('');
   const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
-  console.log(userCredentilas)
+  const fetchCharacterData = async () => {
+    const itemsResponse = await fetchItems();
+    const classesResponse = await fetchAvailableClasses();
+    if(itemsResponse.ok && classesResponse.ok){
+      const fetchedItems = await itemsResponse.json();
+      setItems(fetchedItems);
+      const fetchedClasses = await classesResponse.json();
+      setClasses(fetchedClasses);
+    }else{
+      console.log('itemsResponse: ', itemsResponse.body);
+      console.log('classesResponse: ', classesResponse.body);
+      throw new Error("Error fetching character data");
+    }
+  }
   useEffect(() => {
     // Fetch available classes and items from your backend endpoints
-    const fetchCharacterData = async () => {
-      const itemsResponse = await fetchItems();
-      const classesResponse = await fetchAvailableClasses();
-      if(itemsResponse.ok && classesResponse.ok){
-        const fetchedItems = await itemsResponse.json();
-        setItems(fetchedItems);
-        const fetchedClasses = await classesResponse.json();
-        setClasses(fetchedClasses);
-      }else{
-        console.log('itemsResponse: ', itemsResponse.body);
-        console.log('classesResponse: ', classesResponse.body);
-        throw new Error("Error fetching character data");
-      }
-    }
     try {
       fetchCharacterData();
     } catch (error) {
@@ -43,37 +43,22 @@ export const CharacterCreation = () => {
   };
 
   const handleFileChange = (event) => {
+    console.log('files: ', event.target.files[0])
     setFile(event.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    // Assuming you have classId, itemId, and name in your state
-    const characterData = {
-      class_id: classes[Number(selectedClass)].id,
-      main_class: classes[Number(selectedClass)].name,
-      items_selected: [items[Number(selectedItem)].name],
-      name: name,
-    };
-  
     try {
-      const response = await fetch(`http://127.0.0.1:8000//ghouls_archives/spectral_manifestation/hero/${userCredentilas?.characterID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(characterData),
-      });
+      const response = await updateUserCharacter(classes[Number(selectedClass)].id, items[Number(selectedItem)].id, name, file, userCredentilas?.characterID);
   
       if (response.ok) {
-        // Character was successfully updated
-        const data = await response.json();
-        console.log(data.message); // Log the success message or handle it as needed
+        await response.json();
+        fetchCharacterData();
       } else {
-        // Handle errors here
         const errorData = await response.json();
-        console.error(errorData.error); // Log or handle the error message
+        console.error('updateUserCharacter failed with error: ', errorData.error);
       }
     } catch (error) {
       console.error('Error:', error);
