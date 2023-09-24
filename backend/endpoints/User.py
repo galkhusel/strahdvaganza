@@ -23,6 +23,30 @@ def get_specific_user(user_id):
     user = {'id': user.ID, 'name': user.name, 'email': user.email}
     return jsonify(user)
 
+@users_bp.route('/', methods=['POST'])
+def create_user():
+    data = request.json
+
+    # Check if the required data is provided in the request
+    if 'name' not in data or 'email' not in data or 'password' not in data:
+        return jsonify({'message': 'Incomplete data provided.'}), 400
+
+    # Create a new user
+    new_user = User(
+        name=data['name'],
+        email=data['email']
+    )
+    new_user.set_password(data['password'])
+
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User created successfully.'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': 'Failed to create user.'}), 500
+
+
 
 @users_bp.route('/morphing_summoned/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
