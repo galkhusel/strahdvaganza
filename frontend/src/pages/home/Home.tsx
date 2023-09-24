@@ -1,6 +1,10 @@
 
 export const Home = () => {
+    const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
+
   return (
-    <div>Home</div>
+    <>
+      <div>Welcome {userCredentilas.name}</div>
+    </>
   )
 }

@@ -1,5 +1,6 @@
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { fetchUser } from "../../api/fetchUser";
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -11,18 +12,14 @@ export const Login = () => {
     const handleLogin = async (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) =>{
         event.preventDefault();
         try {
-            const response = await fetch('http://127.0.0.1:8000//ghouls_archives/entourage/login',
-            {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: userMail,
-                    password: userPassword
-                })
-            });
-            if(response.ok) navigate('/');
+            const response = await fetchUser(userMail, userPassword);
+            if(response.ok){
+              response.json().then((body)=>{
+                localStorage.setItem('userCredentials', JSON.stringify(body));
+                navigate('/');
+              })
+            }
+
         } catch (error) {
             
         }
