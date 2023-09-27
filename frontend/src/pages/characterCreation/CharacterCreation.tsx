@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { fetchItems } from '../../api/fetchItems';
 import { fetchAvailableClasses } from '../../api/fetchAvailableClasses';
 import { updateUserCharacter } from '../../api/updateUserCharacter';
+import { Classes } from '../../types/classes';
+import { Items } from '../../types/items';
 
 export const CharacterCreation = () => {
-  const [classes, setClasses] = useState([]);
-  const [items, setItems] = useState([]);
+  const [classes, setClasses] = useState<Classes[]>([]);
+  const [items, setItems] = useState<Items[]>([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState('');
   const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
   const fetchCharacterData = async () => {
@@ -20,8 +22,6 @@ export const CharacterCreation = () => {
       const fetchedClasses = await classesResponse.json();
       setClasses(fetchedClasses);
     }else{
-      console.log('itemsResponse: ', itemsResponse.body);
-      console.log('classesResponse: ', classesResponse.body);
       throw new Error("Error fetching character data");
     }
   }
@@ -34,20 +34,21 @@ export const CharacterCreation = () => {
     }
   }, []);
 
-  const handleClassChange = (event) => {
+  const handleClassChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedClass(event.target.value);
   };
 
-  const handleItemChange = (event) => {
+  const handleItemChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedItem(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    console.log('files: ', event.target.files[0])
-    setFile(event.target.files[0]);
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+     if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+    }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   
     try {

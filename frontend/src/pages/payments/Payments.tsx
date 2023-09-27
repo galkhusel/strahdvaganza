@@ -1,18 +1,20 @@
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { updatePayment } from '../../api/updatePayment';
 
 export const Payments = () => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [paymentDelivered, setPaymentDelivered] = useState(false);
   const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
 
   const pageMainStyles = "min-h-screen bg-elegant-black text-white p-4 " + (paymentDelivered ? "" : "flex items-center justify-center");
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+    }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!file) {
       console.error('No JPG file selected');
