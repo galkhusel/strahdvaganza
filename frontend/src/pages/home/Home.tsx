@@ -44,8 +44,9 @@ export const Home = () => {
       <div>MONKS: en lvl 9 hacen su martial dice = 1d8.</div>
       <div> </div>
       <div>CONTRIBUCIONES PATRONALES: se debera abonar la suma de $10000 al siguiente cbu: 0000003100042114778468 (Ramiro Vicedo).</div>
-      <div> </div>
-      <div>ESPERAMOS EL MAYOR DECORO EN EL ESTABLECIMIENTO.</div>
+      <div>Debido a la inflacion de argentina,  este monto servira para la comida.  </div>
+      <div>vamos a organizar un grupo de wpp con todos para ver el traslado que mas les convenga</div>
+      <div>ESPERAMOS EL MAYOR DECORO EN EL ESTABLECIMIENTO. https://maps.app.goo.gl/os1iKZpmbuEoKhHs9 , Uruguay 528, Haedo.</div>
     </>
   )
 }
