@@ -84,8 +84,11 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
-    if not email or not password:
+    if not email :
         return jsonify({'message': 'Invalid credentials'}), 400
+
+    if not password:
+        return jsonify({'message': 'Invalid credentials'}), 402
 
     user = User.query.filter_by(email=email).first()
 
@@ -95,7 +98,7 @@ def login():
         session.modified = True
         return jsonify({'id': f'{user.ID}', 'name': f'{user.name}', 'characterID': f'{user.characterID}', 'PaymentID': f'{user.PaymentID}'}), 200
     else:
-        return jsonify({'message': 'Invalid credentials'}), 401
+        return jsonify({'message': 'Invalid credentials'}), 403
 
 
 # Logout endpoint
