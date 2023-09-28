@@ -1,11 +1,13 @@
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request, session, send_from_directory
 from db import User, db 
 from flask_login import LoginManager, logout_user
+import os
+import shutil
 
 
 login_manager = LoginManager()
 
-
+directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'instance'))
 
 # Create a blueprint for users-related endpoints
 users_bp = Blueprint('users', __name__)
@@ -117,3 +119,35 @@ def logout():
 
 #@users_bp.route('/morphin_summoning_ritual/<int:user_id>', methods=['PUT'])
 #def verify_Credentials(user_id):
+
+
+@users_bp.route('/save_documents', methods=['GET'])
+def save_documents():
+    # Ensure the provided path exists
+    if not os.path.exists(directory_path):
+        return "Directory not found", 404
+
+    # Create a temporary directory to store the files to be zipped
+    temp_dir = 'temp_zip_dir'
+    os.makedirs(temp_dir, exist_ok=True)
+
+    try:
+        # Recursively copy all files and subdirectories to the temporary directory
+        for root, dirs, files in os.walk(directory_path):
+            for file in files:
+                src_file = os.path.join(root, file)
+                rel_path = os.path.relpath(src_file, directory_path)
+                dest_file = os.path.join(temp_dir, rel_path)
+                os.makedirs(os.path.dirname(dest_file), exist_ok=True)
+                shutil.copy2(src_file, dest_file)
+
+        # Create a zip file containing all the files
+        shutil.make_archive('documents', 'zip', temp_dir)
+
+        # Serve the zip file as an attachment
+        return send_from_directory('', 'documents.zip', as_attachment=True)
+
+    finally:
+        # Clean up the temporary directory
+        shutil.rmtree(temp_dir)
+
