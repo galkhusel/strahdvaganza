@@ -1,10 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { updatePayment } from '../../api/updatePayment';
+import { Navigate } from 'react-router-dom';
 
 export const Payments = () => {
   const [file, setFile] = useState<File | null>(null);
   const [paymentDelivered, setPaymentDelivered] = useState(false);
-  const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
+  const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? '{}');
 
   const pageMainStyles = "min-h-screen bg-elegant-black text-white p-4 " + (paymentDelivered ? "" : "flex items-center justify-center");
 
@@ -21,7 +22,7 @@ export const Payments = () => {
       return;
     }
     try {
-      const response = await updatePayment(file, userCredentilas?.paymentID)
+      const response = await updatePayment(file, userCredentials?.paymentID)
       if (response.ok) {
         setPaymentDelivered(true);
       } else {
@@ -32,7 +33,8 @@ export const Payments = () => {
       console.error('Error:', error);
     }
   };
-  return (
+  return (!userCredentials?.name) ? <Navigate to="/login" /> : (
+    <>
     <div className={pageMainStyles}>
       {paymentDelivered ? 
       (<>
@@ -50,11 +52,11 @@ export const Payments = () => {
               accept=".jpg"
               onChange={handleFileChange}
               className="hidden"
-            />
+              />
             <label
               htmlFor="jpgInput"
               className="w-full bg-mysterious-gray text-white py-2 px-4 rounded cursor-pointer hover:bg-opacity-80"
-            >
+              >
               {file ? 'Change JPG Receipt' : 'Upload JPG Receipt'}
             </label>
           </div>
@@ -62,10 +64,11 @@ export const Payments = () => {
         <button
           type="submit"
           className="bg-blood-red text-white py-2 px-4 rounded hover:bg-opacity-80"
-        >
+          >
           Pressent Offering
         </button>
       </form>)}
     </div>
+          </>
   );
 }

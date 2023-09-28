@@ -1,12 +1,11 @@
-
+// import { redirect } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 export const Home = () => {
-    const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
-
-  return (
+    const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? "{}");
+    
+    return (!userCredentials?.name) ? <Navigate to="/login" /> :  (
     <>
-
-
-      <div>Welcome {userCredentilas.name}</div>
+      <div>Welcome {userCredentials.name}</div>
       <div> CHARACTER LEVEL = 10.</div>
       <div> </div>
       <div>HP = MAX.</div>

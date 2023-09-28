@@ -4,15 +4,17 @@ import { fetchAvailableClasses } from '../../api/fetchAvailableClasses';
 import { updateUserCharacter } from '../../api/updateUserCharacter';
 import { Classes } from '../../types/classes';
 import { Items } from '../../types/items';
+import { useNavigate } from 'react-router-dom';
 
 export const CharacterCreation = () => {
+  const navigate = useNavigate();
   const [classes, setClasses] = useState<Classes[]>([]);
   const [items, setItems] = useState<Items[]>([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState('');
-  const userCredentilas = JSON.parse(localStorage.getItem('userCredentials') ?? '');
+  const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? '{}');
   const fetchCharacterData = async () => {
     const itemsResponse = await fetchItems();
     const classesResponse = await fetchAvailableClasses();
@@ -25,6 +27,7 @@ export const CharacterCreation = () => {
       throw new Error("Error fetching character data");
     }
   }
+
   useEffect(() => {
     // Fetch available classes and items from your backend endpoints
     try {
@@ -52,7 +55,7 @@ export const CharacterCreation = () => {
     event.preventDefault();
   
     try {
-      const response = await updateUserCharacter(classes[Number(selectedClass)].id, items[Number(selectedItem)].id, name, file, userCredentilas?.characterID);
+      const response = await updateUserCharacter(classes[Number(selectedClass)].id, items[Number(selectedItem)].id, name, file, userCredentials?.characterID);
   
       if (response.ok) {
         await response.json();
@@ -65,9 +68,11 @@ export const CharacterCreation = () => {
       console.error('Error:', error);
     }
   };
-  
-
   return (
+    <>
+    {(!userCredentials?.name) ?
+      navigate("/login"):
+      console.log(userCredentials?.name)}
     <div className="min-h-screen flex items-center justify-center bg-elegant-black text-white p-4">
       <form className='w-full max-w-sm' onSubmit={handleSubmit}>
         <h3 className="text-4xl font-bold mb-4">Spectral Manifestation</h3>
@@ -81,7 +86,7 @@ export const CharacterCreation = () => {
           className="w-full text-black ffont-black"
           value={name}
           onChange={(e) => setName(e.target.value)}
-        />
+          />
       </div>
         <div className="mb-4">
           <label htmlFor="classSelect" className="block font-medium">
@@ -92,7 +97,7 @@ export const CharacterCreation = () => {
             className="w-full bg-mysterious-gray cursor-pointer text-white p-2 rounded"
             value={selectedClass}
             onChange={handleClassChange}
-          >
+            >
             {classes ? classes.map((classItem, index) => (
               <option key={classItem.name} value={index}>
                 {classItem.name}
@@ -109,7 +114,7 @@ export const CharacterCreation = () => {
             className="w-full bg-mysterious-gray cursor-pointer text-white p-2 rounded"
             value={selectedItem}
             onChange={handleItemChange}
-          >
+            >
             {classes ? items.map((item, index) => (
               <option key={item.id} value={index}>
               {item.name}
@@ -126,11 +131,11 @@ export const CharacterCreation = () => {
               accept=".pdf"
               onChange={handleFileChange}
               className="hidden"
-            />
+              />
             <label
               htmlFor="fileInput"
               className="w-full bg-mysterious-gray text-white py-2 px-4 rounded cursor-pointer hover:bg-opacity-80"
-            >
+              >
               {file ? (<>Change Character Sheet</>) : (<>Upload Character Sheet (PDF)</>)}
             </label>
           </div>
@@ -138,11 +143,12 @@ export const CharacterCreation = () => {
         <button
           type="submit"
           className="bg-blood-red text-white py-2 px-4 rounded hover:bg-opacity-80"
-        >
+          >
           Create Character
         </button>
       </form>
     </div>
+          </>
   );
 };
 
