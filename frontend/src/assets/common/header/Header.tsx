@@ -18,6 +18,9 @@ export const Header = () => {
       </Link>         
       <Link to={'/payment'} className='text-white hover:text-dusty-rose text-lg'>
         ELDRITCH ACCOUNTABILITY
+      </Link>                
+      <Link to={'/treason-on-the-castle'} className='text-white hover:text-dusty-rose text-lg'>
+        TREASON ON CASTLE RAVENLOFT
       </Link>                   
     </header>
   );
