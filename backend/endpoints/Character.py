@@ -105,3 +105,18 @@ def get_available_classes():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 550
+    
+
+
+@characters_bp.route('/classes/<int:class_id>', methods=['GET'])
+def get_character_class():
+    try:
+        character = Character.query.get(class_id)
+
+        result = {'name': character.Class, 'id': character.ID}
+
+        return jsonify(result)
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 404

@@ -2,6 +2,8 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { fetchItems } from '../../api/fetchItems';
 import { fetchAvailableClasses } from '../../api/fetchAvailableClasses';
 import { updateUserCharacter } from '../../api/updateUserCharacter';
+import { getUserCharacter } from '../../api/getUserCharacter';
+import { getClassData } from '../../api/getClassData';
 import { Classes } from '../../types/classes';
 import { Items } from '../../types/items';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +14,11 @@ export const CharacterCreation = () => {
   const [items, setItems] = useState<Items[]>([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
+  const [userCharacterData, getUserCharacter] = useState('');
+  const [userClassData, getClassData] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState('');
-  const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? '{}');
+  const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? "{}");
   const fetchCharacterData = async () => {
     const itemsResponse = await fetchItems();
     const classesResponse = await fetchAvailableClasses();
@@ -27,6 +31,10 @@ export const CharacterCreation = () => {
       throw new Error("Error fetching character data");
     }
   }
+
+  const user_character = getUserCharacter(userCredentials?.characterID);
+  const class_data = getClassData(user_character?.id);
+  
 
   useEffect(() => {
     // Fetch available classes and items from your backend endpoints
@@ -78,7 +86,7 @@ export const CharacterCreation = () => {
         <h3 className="text-4xl font-bold mb-4">Spectral Manifestation</h3>
         <div className="mb-4">
         <label htmlFor="name" className="block font-medium">
-          Character Name
+          Character Name - selected name {user_character?.name}
         </label>
         <input
           type="text"
@@ -90,7 +98,7 @@ export const CharacterCreation = () => {
       </div>
         <div className="mb-4">
           <label htmlFor="classSelect" className="block font-medium">
-            Select Character Class
+            Select Character Class - class selected {class_data?.name}
           </label>
           <select
             id="classSelect"
@@ -107,7 +115,7 @@ export const CharacterCreation = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="itemSelect" className="block font-medium">
-            Select Item
+            Select Item - item selected {user_character?.item}
           </label>
           <select
             id="itemSelect"
