@@ -1,4 +1,4 @@
-export const fetchAvailableClasses = () => fetch('https://strahdvaganza-backend.onrender.com//ghouls_archives/spectral_manifestation/classes/available',
+export const fetchAvailableClasses = () => fetch('http://35.203.51.152:10000//ghouls_archives/spectral_manifestation/classes/available',
     {
         method: 'GET',
         headers:{

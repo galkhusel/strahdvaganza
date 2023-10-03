@@ -1,0 +1,155 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+Address already in use
+Port 10000 is in use by another program. Either identify and stop that program, or start the server with a different port.
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:10000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:10000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:10000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+127.0.0.1 - - [03/Oct/2023 22:44:02] "[33mGET / HTTP/1.1[0m" 404 -
+127.0.0.1 - - [03/Oct/2023 22:46:36] "[33mGET //ghouls_archives/spectral_manifestations/items HTTP/1.1[0m" 404 -
+127.0.0.1 - - [03/Oct/2023 22:46:43] "[33mGET //ghouls_archives/spectral_manifestations/Items HTTP/1.1[0m" 404 -
+127.0.0.1 - - [03/Oct/2023 22:52:48] "[33mGET / HTTP/1.1[0m" 404 -
+127.0.0.1 - - [03/Oct/2023 22:53:12] "[33mGET //ghoules_archives/spectral_manifestation/items HTTP/1.1[0m" 404 -
+ * Detected change in '/home/fdelpozo/strahdvaganza/backend/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.162.0.2:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+ * Detected change in '/home/fdelpozo/strahdvaganza/backend/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:10000
+ * Running on http://10.162.0.2:10000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+127.0.0.1 - - [03/Oct/2023 22:58:08] "[33mGET //ghoules_archives/spectral_manifestation/items HTTP/1.1[0m" 404 -
+127.0.0.1 - - [03/Oct/2023 22:58:17] "[33mGET //ghoules_archives/spectral_manifestation/items HTTP/1.1[0m" 404 -
+10.162.0.2 - - [03/Oct/2023 22:58:38] "[33mGET //ghoules_archives/spectral_manifestation/items HTTP/1.1[0m" 404 -
+10.162.0.2 - - [03/Oct/2023 22:59:06] "[33mGET //ghoules_archives/spectral_manifestation/items HTTP/1.1[0m" 404 -
+10.162.0.2 - - [03/Oct/2023 22:59:30] "GET //ghouls_archives/spectral_manifestation/items HTTP/1.1" 200 -
+127.0.0.1 - - [03/Oct/2023 22:59:53] "GET //ghouls_archives/spectral_manifestation/items HTTP/1.1" 200 -
+192.155.90.220 - - [03/Oct/2023 23:05:19] code 400, message Bad request version ('À\x14À')
+192.155.90.220 - - [03/Oct/2023 23:05:19] "[35m[1m\x16\x03\x01\x00\x85\x01\x00\x00\x81\x03\x03q\x91\x17}ïg4z\x9fbx\x19º\x09ÅßöàêtñB\x0eö5Ê\x0c|E\x1d7Ï\x00\x00 À/À0À+À,Ì¨Ì©À\x13À\x09À\x14À[0m" HTTPStatus.BAD_REQUEST -
+127.0.0.1 - - [03/Oct/2023 23:07:18] "POST /ghouls_archives/entourage/login HTTP/1.1" 200 -
+181.4.52.198 - - [03/Oct/2023 23:11:47] code 400, message Bad request version ('À\x13À')
+181.4.52.198 - - [03/Oct/2023 23:11:47] "[35m[1m\x16\x03\x01\x00å\x01\x00\x00á\x03\x03\x10\x9e=ò,dÜð\x0f\x0e\x9b\\Hüf\x10J\x87\x18/þÙç\x0dsÄ,wN{\x18Ä \x89\x93\x8f\x84A\x7fÐ+ii1È\x07)ZÙ\x81\x81³äWe< öð z\x8d¼¼Ì\x00$\x13\x01\x13\x02\x13\x03À/À+À0À,Ì©Ì¨À\x09À\x13À[0m" HTTPStatus.BAD_REQUEST -
+181.4.52.198 - - [03/Oct/2023 23:11:54] code 400, message Bad request version ('À\x13À')
+181.4.52.198 - - [03/Oct/2023 23:11:54] "[35m[1m\x16\x03\x01\x00å\x01\x00\x00á\x03\x03ÿãê~0«kHKýzµå!Î\x14?F¬Ì_\x86\x97_ÌN#Ø©\x84®\x1f  ;\x10ÚIH\x0bN\x8f!î¦\x11"ßõk\x93$\x9a§È\x0d¬&\x13"z}øYÏ\x00$\x13\x01\x13\x02\x13\x03À/À+À0À,Ì©Ì¨À\x09À\x13À[0m" HTTPStatus.BAD_REQUEST -
+127.0.0.1 - - [03/Oct/2023 23:15:43] "POST /ghouls_archives/entourage/login HTTP/1.1" 200 -
+[2023-10-03 23:16:15 +0000] [20593] [INFO] Starting gunicorn 21.2.0
+[2023-10-03 23:16:15 +0000] [20593] [INFO] Listening at: http://127.0.0.1:8000 (20593)
+[2023-10-03 23:16:15 +0000] [20593] [INFO] Using worker: sync
+[2023-10-03 23:16:15 +0000] [20594] [INFO] Booting worker with pid: 20594
+[2023-10-03 23:16:15 +0000] [20594] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/local/lib/python3.9/dist-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 986, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 680, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 790, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/fdelpozo/strahdvaganza/backend/app.py", line 5, in <module>
+    from endpoints.User import users_bp, login_manager
+  File "/home/fdelpozo/strahdvaganza/backend/endpoints/User.py", line 3, in <module>
+    from flask_login import LoginManager, logout_user
+  File "/usr/local/lib/python3.9/dist-packages/flask_login/__init__.py", line 12, in <module>
+    from .login_manager import LoginManager
+  File "/usr/local/lib/python3.9/dist-packages/flask_login/login_manager.py", line 33, in <module>
+    from .utils import _create_identifier
+  File "/usr/local/lib/python3.9/dist-packages/flask_login/utils.py", line 14, in <module>
+    from werkzeug.urls import url_decode
+ImportError: cannot import name 'url_decode' from 'werkzeug.urls' (/usr/local/lib/python3.9/dist-packages/werkzeug/urls.py)
+[2023-10-03 23:16:15 +0000] [20594] [INFO] Worker exiting (pid: 20594)
+[2023-10-03 23:16:15 +0000] [20593] [ERROR] Worker (pid:20594) exited with code 3
+[2023-10-03 23:16:15 +0000] [20593] [ERROR] Shutting down: Master
+[2023-10-03 23:16:15 +0000] [20593] [ERROR] Reason: Worker failed to boot.
+[2023-10-03 23:18:07 +0000] [20610] [INFO] Starting gunicorn 21.2.0
+[2023-10-03 23:18:07 +0000] [20610] [INFO] Listening at: http://127.0.0.1:8000 (20610)
+[2023-10-03 23:18:07 +0000] [20610] [INFO] Using worker: sync
+[2023-10-03 23:18:07 +0000] [20611] [INFO] Booting worker with pid: 20611
+[2023-10-03 23:20:46 +0000] [20610] [INFO] Handling signal: int
+[2023-10-03 23:20:46 +0000] [20611] [INFO] Worker exiting (pid: 20611)
+[2023-10-03 23:20:46 +0000] [20610] [INFO] Shutting down: Master
+[2023-10-03 23:21:08 +0000] [20614] [INFO] Starting gunicorn 21.2.0
+[2023-10-03 23:21:08 +0000] [20614] [INFO] Listening at: http://0.0.0.0:10000 (20614)
+[2023-10-03 23:21:08 +0000] [20614] [INFO] Using worker: sync
+[2023-10-03 23:21:08 +0000] [20615] [INFO] Booting worker with pid: 20615
+[2023-10-03 23:21:32 +0000] [20615] [WARNING] Invalid request from ip=198.74.56.46: Invalid HTTP request line: '\x03\x00\x00&!à\x00\x00þÊ\x00Cookie: mstshash='
+[2023-10-03 23:26:11 +0000] [20614] [INFO] Handling signal: int
+[2023-10-03 23:26:11 +0000] [20615] [INFO] Worker exiting (pid: 20615)
+[2023-10-03 23:26:11 +0000] [20614] [INFO] Shutting down: Master
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:10000
+ * Running on http://10.162.0.2:10000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 803-156-289
+181.4.52.198 - - [03/Oct/2023 23:31:20] "[31m[1mGET //ghouls_archives/entourage/login HTTP/1.1[0m" 405 -
+[2023-10-03 23:32:08 +0000] [20744] [INFO] Starting gunicorn 21.2.0
+[2023-10-03 23:32:08 +0000] [20744] [INFO] Listening at: http://0.0.0.0:10000 (20744)
+[2023-10-03 23:32:08 +0000] [20744] [INFO] Using worker: sync
+[2023-10-03 23:32:08 +0000] [20745] [INFO] Booting worker with pid: 20745
+[2023-10-03 23:39:27 +0000] [20744] [INFO] Handling signal: int
+[2023-10-03 23:39:27 +0000] [20745] [INFO] Worker exiting (pid: 20745)
+[2023-10-03 23:39:27 +0000] [20744] [INFO] Shutting down: Master
+[2023-10-03 23:40:06 +0000] [20797] [INFO] Starting gunicorn 21.2.0
+[2023-10-03 23:40:06 +0000] [20797] [INFO] Listening at: http://0.0.0.0:10000 (20797)
+[2023-10-03 23:40:06 +0000] [20797] [INFO] Using worker: sync
+[2023-10-03 23:40:06 +0000] [20798] [INFO] Booting worker with pid: 20798

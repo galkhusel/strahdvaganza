@@ -1,0 +1,18 @@
+
+> frontend@0.0.0 dev
+> vite --host
+
+
+  VITE v4.4.9  ready in 544 ms
+
+  ➜  Local:   http://localhost:3030/
+  ➜  Network: http://10.162.0.2:3030/
+
+> frontend@0.0.0 dev
+> vite --host
+
+
+  VITE v4.4.9  ready in 547 ms
+
+  ➜  Local:   http://localhost:3030/
+  ➜  Network: http://10.162.0.2:3030/

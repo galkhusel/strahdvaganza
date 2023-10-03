@@ -1,4 +1,4 @@
-export const fetchUser = (userMail: string, userPassword: string) => fetch('https://strahdvaganza-backend.onrender.com//ghouls_archives/entourage/login',
+export const fetchUser = (userMail: string, userPassword: string) => fetch('http://35.203.51.152:10000//ghouls_archives/entourage/login',
             {
                 method: 'POST',
                 headers:{
