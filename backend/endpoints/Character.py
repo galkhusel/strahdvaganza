@@ -20,7 +20,7 @@ def update_character_class(character, class_id):
     if class_id == character.ClassID: return 1
     character_class_new = Character_Classes.query.get(class_id)
     character_class_old = Character_Classes.query.get(character.ClassID)
-    if character_class_new.Slot == 0 and character_class_old.Slot == 1:
+    if  character_class_old.Class == "Summoned Ghost" or (character_class_new.Slot == 0 and character_class_old.Slot == 1):
         character.ClassID = character_class_new.ID
         character_class_new.Slot = 1
         character_class_old.Slot = 0
