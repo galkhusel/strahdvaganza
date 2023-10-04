@@ -4,49 +4,48 @@ export const Home = () => {
     const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? "{}");
     
     return (!userCredentials?.name) ? <Navigate to="/login" /> :  (
-    <>
-      <div>Welcome {userCredentials.name}</div>
-      <div> CHARACTER LEVEL = 10.</div>
-      <div> </div>
-      <div>HP = MAX.</div>
-      <div> </div>
-      <div>STANDARD ARRAY = 18,16,14,12,10,8.</div>
-      <div> </div>
-      <div>MANUALES PERMITIDOS : PHB, Xanathar, Tashas, Fizban.</div>
-      <div> </div>
-      <div>MULTICLASSING: si o si la clase que eligen en la pagina tiene que ser la mas representada en los niveles.</div>
-      <div>En los niveles 4 y 8, si estan multiclaseando obtienen igualmente el asi.</div>
-      <div> </div>
-      <div>FLANQUEO: al estar 2 personas aliadas en linea con un enemigo entre medio obtienen +2 a las tiradas de ataque.</div>
-      <div> </div>
-      <div>SUERTE</div>
-      <div>Los jugadores pueden tener éxito automatico en una tirada si sacrifican una carta de tarot.</div>
-      <div>Pila de dados igual a 2d6 por persona, reaccion para agarrar cantidad x, se agrega a cualquier tipo de tirada, </div>
-      <div>el resultado de los d6 también le hace daño a alguien random de la party. </div>
-      <div>La pila se repone cuando ya no quedan más.</div>
-      <div>POCIONES: para ingerir una pocion se utiliza bonus action, y una accion para darsela a alguien mas.</div>
-      <div> </div>
-      <div>SPELL SCROLLS: este tiene que estar dentro de la lista de hechizos de alguna de sus clases.</div>
-      <div> </div>
-      <div>SORCERERS: utilizan Magic Points(MP) para castear un spell: el coste = spell_level.</div>
-      <div>  lvl  | Magic Points </div>
-      <div>   1   |      2       </div>
-      <div>   2   |      3       </div>
-      <div>   3   |      8       </div>
-      <div>   4   |      10      </div>
-      <div>   5   |      16      </div>
-      <div>   6   |      19      </div>
-      <div>   7   |      23      </div>
-      <div>   8   |      27      </div>
-      <div>   9   |      36      </div>
-      <div>   10  |      41      </div>
-      <div> </div>
-      <div>MONKS: en lvl 9 hacen su martial dice = 1d8.</div>
-      <div> </div>
-      <div>CONTRIBUCIONES PATRONALES: se debera abonar la suma de $10000 al siguiente cbu: 0000003100042114778468 (Ramiro Vicedo).</div>
-      <div>Debido a la inflacion de argentina,  este monto servira para la comida.  </div>
-      <div>vamos a organizar un grupo de wpp con todos para ver el traslado que mas les convenga</div>
-      <div>ESPERAMOS EL MAYOR DECORO EN EL ESTABLECIMIENTO. https://maps.app.goo.gl/os1iKZpmbuEoKhHs9 , Uruguay 528, Haedo.</div>
-    </>
+    <div className="min-h-screen bg-elegant-black text-white p-4">
+      <div className="text-4xl font-bold mb-4">Welcome {userCredentials.name}</div>
+      <div>CHARACTER LEVEL: 10</div>
+      <div>HP: MAX</div>
+      <div>STANDARD ARRAY: 18, 16, 14, 12, 10, 8</div>
+      <div>MULTICLASSING: The chosen class must be the most represented in levels.</div>
+      <div>Levels 4 and 8: If multiclassing, you still get the ASI.</div>
+      <div>FLANKING: +2 to attack rolls when two allies are in line with an enemy in between.</div>
+      <div>SUERTE: Players can automatically succeed on a roll by sacrificing a Tarot card.</div>
+      <div>Stack of dice: 2d6 per person, react to grab quantity x, adds to any roll, also deals damage to a random party member.</div>
+      <div>The stack replenishes when none are left.</div>
+      <div>POCIONES: Bonus action to consume, action to give to someone else.</div>
+      <div>SPELL SCROLLS: Must be in the spell list of one of your classes.</div>
+      <div>SORCERERS: Use Magic Points (MP) to cast a spell: Cost = spell_level.</div>
+      <div>
+        <div>lvl | Magic Points</div>
+        <div>1 | 2</div>
+        <div>2 | 3</div>
+        <div>3 | 8</div>
+        <div>4 | 10</div>
+        <div>5 | 16</div>
+        <div>6 | 19</div>
+        <div>7 | 23</div>
+        <div>8 | 27</div>
+        <div>9 | 36</div>
+        <div>10 | 41</div>
+      </div>
+      <div>MONKS: At level 9, martial dice = 1d8.</div>
+      <div>CONTRIBUCIONES PATRONALES: Please contribute $10000 to CBU: 0000003100042114778468 (Ramiro Vicedo).</div>
+      <div>Due to inflation in Argentina, this amount will cover food expenses.</div>
+      <div>We'll create a WhatsApp group to coordinate transportation.</div>
+      <div>DECORUM IS EXPECTED AT THE ESTABLISHMENT.</div>
+      <div>
+        <a
+          href="https://maps.app.goo.gl/os1iKZpmbuEoKhHs9"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blood-red underline"
+        >
+          View Location: Uruguay 528, Haedo
+        </a>
+      </div>
+    </div>
   )
 }

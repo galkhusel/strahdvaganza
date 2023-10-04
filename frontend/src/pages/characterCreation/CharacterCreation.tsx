@@ -60,6 +60,7 @@ export const CharacterCreation = () => {
       if (response.ok) {
         await response.json();
         fetchCharacterData();
+        navigate("/")
       } else {
         const errorData = await response.json();
         console.error('updateUserCharacter failed with error: ', errorData.error);
