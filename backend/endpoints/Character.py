@@ -10,11 +10,30 @@ PDF_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'i
 # Create a blueprint for characters-related endpoints
 characters_bp = Blueprint('characters', __name__)
 
-@characters_bp.route('/hero/<int:character_id>', methods=['GET'])  # Update the route path to /summoned
+# @characters_bp.route('/hero/<int:character_id>', methods=['GET'])  # Update the route path to /summoned
+# def get_character(character_id):
+#     character = Character.query.get(character_id)
+#     character_ = {'id': character.ID, 'name': character.Name, 'classID': character.ClassID,'item': character.ItemID,'pdf': character.PDF} 
+#     return jsonify(character_)
+
+@characters_bp.route('/hero/<int:character_id>', methods=['GET'])
 def get_character(character_id):
     character = Character.query.get(character_id)
-    character_ = {'id': character.ID, 'name': character.Name, 'class': character.ClassID,'item': character.ItemID,'pdf': character.PDF} 
-    return jsonify(character_)
+    if character:
+        character_class = Character_Classes.query.get(character.ClassID)
+        if character_class:
+            character_ = {
+                'id': character.ID,
+                'name': character.Name,
+                'classID': character.ClassID,
+                'class': character_class.Class,
+                'item': character.ItemID,
+                'pdf': character.PDF
+            }
+            return jsonify(character_)
+    
+    return jsonify({'error': 'Character not found'}), 404
+
 
 def update_character_class(character, class_id):
     if class_id == character.ClassID: return 1

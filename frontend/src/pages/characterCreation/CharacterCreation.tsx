@@ -7,6 +7,7 @@ import { Items } from '../../types/items';
 import { useNavigate } from 'react-router-dom';
 import { PageSpinner } from '../../assets/common/spiners/pageSpinner';
 import { ButtonSpinner } from '../../assets/common/spiners/buttonSpinner';
+import { fetchCurrentCharacter } from '../../api/fetchCurrentCharacter';
 
 export const CharacterCreation = () => {
   const navigate = useNavigate();
@@ -23,11 +24,14 @@ export const CharacterCreation = () => {
     setPageIsLoading(true)
     const itemsResponse = await fetchItems();
     const classesResponse = await fetchAvailableClasses();
-    if(itemsResponse.ok && classesResponse.ok){
+    const currentCharacterResponse = await fetchCurrentCharacter(userCredentials?.characterID);
+    if(itemsResponse.ok && classesResponse.ok && currentCharacterResponse.ok){
+      const fetchCurrentCharacter = await currentCharacterResponse.json();
+      setName(fetchCurrentCharacter.name);
       const fetchedItems = await itemsResponse.json();
       setItems(fetchedItems);
       const fetchedClasses = await classesResponse.json();
-      setClasses(fetchedClasses);
+      setClasses([{id: fetchCurrentCharacter.classID, name: fetchCurrentCharacter.class}, ...fetchedClasses]);
       setPageIsLoading(false)
     }else{
       throw new Error("Error fetching character data");
@@ -107,7 +111,7 @@ export const CharacterCreation = () => {
             onChange={handleClassChange}
             >
             {classes ? classes.map((classItem, index) => (
-              <option key={classItem.name} value={index}>
+              <option key={classItem.name} value={index} selected={index == 0 ? true : false}>
                 {classItem.name}
               </option>
             )): (<option value="">No classes available</option>)}
