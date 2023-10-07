@@ -5,6 +5,8 @@ import { updateUserCharacter } from '../../api/updateUserCharacter';
 import { Classes } from '../../types/classes';
 import { Items } from '../../types/items';
 import { useNavigate } from 'react-router-dom';
+import { PageSpinner } from '../../assets/common/spiners/pageSpinner';
+import { ButtonSpinner } from '../../assets/common/spiners/buttonSpinner';
 
 export const CharacterCreation = () => {
   const navigate = useNavigate();
@@ -12,10 +14,13 @@ export const CharacterCreation = () => {
   const [items, setItems] = useState<Items[]>([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
+  const [PageIsLoading, setPageIsLoading] = useState(false);
+  const [uploadingCharacter, setUploadingCharacter] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState('');
   const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? '{}');
   const fetchCharacterData = async () => {
+    setPageIsLoading(true)
     const itemsResponse = await fetchItems();
     const classesResponse = await fetchAvailableClasses();
     if(itemsResponse.ok && classesResponse.ok){
@@ -23,6 +28,7 @@ export const CharacterCreation = () => {
       setItems(fetchedItems);
       const fetchedClasses = await classesResponse.json();
       setClasses(fetchedClasses);
+      setPageIsLoading(false)
     }else{
       throw new Error("Error fetching character data");
     }
@@ -53,14 +59,14 @@ export const CharacterCreation = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  
+    setUploadingCharacter(true);
     try {
       const response = await updateUserCharacter(classes[Number(selectedClass)].id, items[Number(selectedItem)].id, name, file, userCredentials?.characterID);
   
       if (response.ok) {
         await response.json();
         fetchCharacterData();
-        navigate("/")
+        setUploadingCharacter(false);
       } else {
         const errorData = await response.json();
         console.error('updateUserCharacter failed with error: ', errorData.error);
@@ -69,13 +75,14 @@ export const CharacterCreation = () => {
       console.error('Error:', error);
     }
   };
-  return (
+  
+  return(
     <>
-    {(!userCredentials?.name) ?
-      navigate("/login"):
-      console.log(userCredentials?.name)}
+    {(!userCredentials?.name) && navigate("/login")}
     <div className="min-h-screen flex items-center justify-center bg-elegant-black text-white p-4">
       <form className='w-full max-w-sm' onSubmit={handleSubmit}>
+       { PageIsLoading ? (<PageSpinner/>) : <>
+       
         <h3 className="text-4xl font-bold mb-4">Spectral Manifestation</h3>
         <div className="mb-4">
         <label htmlFor="name" className="block font-medium">
@@ -141,12 +148,14 @@ export const CharacterCreation = () => {
             </label>
           </div>
         </div>
-        <button
+        
+        {uploadingCharacter ? (<ButtonSpinner/>) : (<button
           type="submit"
           className="bg-blood-red text-white py-2 px-4 rounded hover:bg-opacity-80"
           >
           Create Character
-        </button>
+        </button>)}
+        </>}
       </form>
     </div>
           </>
