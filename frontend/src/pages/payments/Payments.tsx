@@ -1,10 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { updatePayment } from '../../api/updatePayment';
 import { Navigate } from 'react-router-dom';
+import { ButtonSpinner } from '../../assets/common/spiners/buttonSpinner';
 
 export const Payments = () => {
   const [file, setFile] = useState<File | null>(null);
   const [paymentDelivered, setPaymentDelivered] = useState(false);
+  const [uploadingCharacter, setUploadingCharacter] = useState(false);
   const userCredentials = JSON.parse(localStorage.getItem('userCredentials') ?? '{}');
 
   const pageMainStyles = "min-h-screen bg-elegant-black text-white p-4 " + (paymentDelivered ? "" : "flex items-center justify-center");
@@ -17,6 +19,7 @@ export const Payments = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setUploadingCharacter(true);
     if (!file) {
       console.error('No JPG file selected');
       return;
@@ -25,6 +28,7 @@ export const Payments = () => {
       const response = await updatePayment(file, userCredentials?.paymentID)
       if (response.ok) {
         setPaymentDelivered(true);
+        setUploadingCharacter(false);
       } else {
         const errorData = await response.json();
         console.error('updatePayment failed with Error: ', errorData.error);
@@ -61,12 +65,12 @@ export const Payments = () => {
             </label>
           </div>
         </div>
-        <button
+        {uploadingCharacter ? (<ButtonSpinner/>) : (<button
           type="submit"
           className="bg-blood-red text-white py-2 px-4 rounded hover:bg-opacity-80"
           >
           Pressent Offering
-        </button>
+        </button>)}
       </form>)}
     </div>
           </>
