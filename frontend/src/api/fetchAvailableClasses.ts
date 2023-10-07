@@ -1,4 +1,6 @@
-export const fetchAvailableClasses = () => fetch('http://35.203.51.152:10000//ghouls_archives/spectral_manifestation/classes/available',
+import defaultUrl from "../assets/constants";
+
+export const fetchAvailableClasses = () => fetch(`${defaultUrl}//ghouls_archives/spectral_manifestation/classes/available`,
     {
         method: 'GET',
         headers:{
