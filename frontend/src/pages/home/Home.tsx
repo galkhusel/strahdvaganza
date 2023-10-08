@@ -6,7 +6,7 @@ export const Home = () => {
     return (!userCredentials?.name) ? <Navigate to="/login" /> :  (
     <div className="min-h-screen bg-elegant-black text-white p-4">
       <div className="text-4xl font-bold mb-4">Welcome {userCredentials.name}</div>
-      <div>AVAILABLE MANUALS: Players Hand Book, Xanathar's Guide To Everything, Tasha's Cauldron of Everything, Fizban's Treasury of Dragons, Matthew Mercer Blood Hunter.</div>
+      <div>AVAILABLE MANUALS: Players Handbook, Xanathar's Guide To Everything, Tasha's Cauldron of Everything, Fizban's Treasury of Dragons, Matthew Mercer Blood Hunter.</div>
       <div>CHARACTER LEVEL: 10</div>
       <div>HP: MAX</div>
       <div>STANDARD ARRAY: 18, 16, 14, 12, 10, 8</div>

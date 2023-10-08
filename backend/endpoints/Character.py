@@ -10,35 +10,25 @@ PDF_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'i
 # Create a blueprint for characters-related endpoints
 characters_bp = Blueprint('characters', __name__)
 
-# @characters_bp.route('/hero/<int:character_id>', methods=['GET'])  # Update the route path to /summoned
-# def get_character(character_id):
-#     character = Character.query.get(character_id)
-#     character_ = {'id': character.ID, 'name': character.Name, 'classID': character.ClassID,'item': character.ItemID,'pdf': character.PDF} 
-#     return jsonify(character_)
-
-@characters_bp.route('/hero/<int:character_id>', methods=['GET'])
+@characters_bp.route('/hero/<int:character_id>', methods=['GET'])  # Update the route path to /summoned
 def get_character(character_id):
     character = Character.query.get(character_id)
-    if character:
-        character_class = Character_Classes.query.get(character.ClassID)
-        if character_class:
-            character_ = {
-                'id': character.ID,
-                'name': character.Name,
-                'classID': character.ClassID,
-                'class': character_class.Class,
-                'item': character.ItemID,
-                'pdf': character.PDF
-            }
-            return jsonify(character_)
-    
-    return jsonify({'error': 'Character not found'}), 404
-
+    character_class = Character_Classes.query.get(character.ClassID)
+    character_ = {  'id': character.ID,
+                    'name': character.Name,
+                    'class': {"classID" : character_class.ID,
+                              "class_name" : character_class.Class,
+                              },
+                    'item': character.ItemID,
+                    'pdf': character.PDF} 
+    return jsonify(character_)
 
 def update_character_class(character, class_id):
     if class_id == character.ClassID: return 1
     character_class_new = Character_Classes.query.get(class_id)
     character_class_old = Character_Classes.query.get(character.ClassID)
+    print(character_class_new)
+    print(character_class_old)
     if  character_class_old.Class == "Summoned Ghost" or (character_class_new.Slot == 0 and character_class_old.Slot == 1):
         character.ClassID = character_class_new.ID
         character_class_new.Slot = 1
@@ -82,7 +72,22 @@ def update_character_and_upload_pdf(character_id):
     if 'pdf' in request.files:
         pdf_file = request.files['pdf']
         if pdf_file.filename != '':
-            # Secure the filename to prevent path traversal attacks
+
+
+            # Construct the JPG file path using the JPG_FILE_PATH
+            pdf_filename = f'character_{character_id}.pdf'
+            pdf_path = os.path.join(PDF_FILE_PATH, pdf_filename)
+            print(pdf_filename)
+            # Ensure the jpg folder exists, create if not
+            os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
+            # Before saving the file
+            print("PDF_path:", pdf_path)
+            pdf_file.save(pdf_path)
+            # After saving the file
+            print("PDF saved at:", pdf_path)
+            character.PDF = pdf_path
+            #            db.session.commit()
+            """            # Secure the filename to prevent path traversal attacks
             pdf_filename = secure_filename(pdf_file.filename)
             pdf_path = os.path.join(PDF_FILE_PATH, pdf_filename)
             print(pdf_file)
@@ -94,8 +99,8 @@ def update_character_and_upload_pdf(character_id):
             # After saving the file
             print("PDF saved at:", pdf_path)
             character.PDF = pdf_path
-    db.session.commit()
-
+        """ 
+        db.session.commit()    
     return jsonify({'message': 'character updated'}), 200
 
 

@@ -31,7 +31,7 @@ export const CharacterCreation = () => {
       const fetchedItems = await itemsResponse.json();
       setItems(fetchedItems);
       const fetchedClasses = await classesResponse.json();
-      setClasses([{id: fetchCurrentCharacter.classID, name: fetchCurrentCharacter.class}, ...fetchedClasses]);
+      setClasses([{id: fetchCurrentCharacter.classID, name: fetchCurrentCharacter.class.class_name}, ...fetchedClasses]);
       setPageIsLoading(false)
     }else{
       throw new Error("Error fetching character data");
