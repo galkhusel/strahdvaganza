@@ -86,20 +86,6 @@ def update_character_and_upload_pdf(character_id):
             # After saving the file
             print("PDF saved at:", pdf_path)
             character.PDF = pdf_path
-            #            db.session.commit()
-            """            # Secure the filename to prevent path traversal attacks
-            pdf_filename = secure_filename(pdf_file.filename)
-            pdf_path = os.path.join(PDF_FILE_PATH, pdf_filename)
-            print(pdf_file)
-            # Ensure the PDF folder exists, create if not
-            os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
-            # Before saving the file
-            print("pdf_path:", pdf_path)
-            pdf_file.save(pdf_path)
-            # After saving the file
-            print("PDF saved at:", pdf_path)
-            character.PDF = pdf_path
-        """ 
         db.session.commit()    
     return jsonify({'message': 'character updated'}), 200
 
@@ -121,11 +107,8 @@ def get_available_classes():
             .outerjoin(Character, Character_Classes.ID == Character.ClassID) \
             .filter(Character.ID.is_(None)) \
             .all()
-
         result = [{'name': unused_class.Class, 'id': unused_class.ID} for unused_class in unused_character_classes]
-
         return jsonify(result)
-
-
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 550
