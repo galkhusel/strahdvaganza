@@ -1,4 +1,6 @@
-export const fetchItems = () => fetch('http://35.203.51.152:10000//ghouls_archives/spectral_manifestation/items',
+import defaultUrl from "../assets/constants";
+
+export const fetchItems = () => fetch(`${defaultUrl}//ghouls_archives/spectral_manifestation/items`,
     {
         method: 'GET',
         headers: {

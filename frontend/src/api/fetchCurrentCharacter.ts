@@ -1,6 +1,6 @@
 import defaultUrl from "../assets/constants";
 
-export const fetchAvailableClasses = () => fetch(`${defaultUrl}//ghouls_archives/spectral_manifestation/classes/available`,
+export const fetchCurrentCharacter = (userId: string) => fetch(`${defaultUrl}//ghouls_archives/spectral_manifestation/hero/${userId}`,
     {
         method: 'GET',
         headers:{

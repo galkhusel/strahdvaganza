@@ -1,4 +1,6 @@
-export const fetchUser = (userMail: string, userPassword: string) => fetch('http://35.203.51.152:10000//ghouls_archives/entourage/login',
+import defaultUrl from "../assets/constants";
+
+export const fetchUser = (userMail: string, userPassword: string) => fetch(`${defaultUrl}//ghouls_archives/entourage/login`,
             {
                 method: 'POST',
                 headers:{
