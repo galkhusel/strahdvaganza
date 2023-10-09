@@ -4,6 +4,7 @@ export const TreasonOnTheCastle = () => {
   
   return (!userCredentials?.name) ? <Navigate to="/login" /> :  (
   <>
+  <div className="min-h-screen bg-elegant-black text-white p-4">
     <div>Durante la velada se dispondran de breacks sociales. durante estos breaks se jugara un minijuego que sera determinante para la pelea final.</div>
     <div>En este juego todos interpretaran un rol, simil blood on the clock tower, los roles seran distribuidos al comenzar el evento.</div>
     <div>Los jugadores deberan de hallar a los roles de "haunted one" y "criminal".</div>
@@ -24,6 +25,7 @@ export const TreasonOnTheCastle = () => {
     <div>Noble - Mecanica: Hacer y cumplir un trato con strahd </div>
     <div>Sage - Mecanica: Durante la jornada, el Sage puede hacer dos preguntas de si o no a los masters. Las misma seran respondidas de forma correcta.</div>
     <div>Sailor - Mecanica: En su borrachera, el Sailor cree ser el Sage. Tiene la misma habilidad que el Sage, pero la informacion que recibe puede ser incorrecta.</div>
+  </div>
   </>
 )
 }
